@@ -1,3 +1,6 @@
 [submodule "core/node-postgre-orm"]
 	path = core/node-postgre-orm
 	url = git@github.com:tomasperezv/node-postgre-orm.git
+[submodule "core/node-config"]
+	path = core/node-config
+	url = git@github.com:tomasperezv/node-config.git
