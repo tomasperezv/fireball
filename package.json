@@ -1,0 +1,14 @@
+{
+	"name": "fireball",
+	"version": "0.0.2",
+	"author": "Tomas Perez <tom@0x101.com>",
+	"description": "Monitoring service",
+	"dependencies": {
+		"jsdom": "*",
+		"pg": "*",
+		"node-pg-orm": "*"
+	},
+	"engine": {
+		"node": ">=0.6"
+	}
+}
