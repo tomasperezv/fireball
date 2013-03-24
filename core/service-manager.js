@@ -75,6 +75,7 @@ Service.prototype.onInterval = function() {
 
 	var storageService = new storage.Service();
 	var numServices = this.services.length;
+
 	for (var i = 0; i < numServices; i++) {
 
 		var service = this.services[i];
@@ -84,23 +85,40 @@ Service.prototype.onInterval = function() {
 
 		if (delta >= service.interval) {
 
+			console.log('Retrieving ' + service.identifier);
+
 			service.lastExecutionTime = timestamp;
 
-			// Retrieve and store the data
-			var data = service.fetch();
-			storageService.create({
-				data: JSON.stringify(data),
-				service_id: service.identifier,
-				time: timestamp
-			});
+			storageService.load({}, function(result) {
+
+				var lastValue = result.data.length > 0 ? result.data[0].data : null;
+				if (lastValue !== null) {
+					lastValue = JSON.parse(lastValue);
+					rows = lastValue.rows;
+					lastValue = rows.length > 0 ? rows[0] : null;
+				}
+
+				// Retrieve and store the data
+				var data = service.fetch(lastValue, function(result, store) {
+					if (store) {
+
+						console.log('New elements found');
+
+						storageService.create({
+							data: JSON.stringify(result),
+							service_id: service.id,
+							time: timestamp
+						});
+
+					}
+				});
+
+			}, 1, {column: 'time', type: 'DESC'});
+
 
 		}
 
 	}
-
-	storageService.load({}, function(model) {
-		console.log(model);
-	});
 
 };
 

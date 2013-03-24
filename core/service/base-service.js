@@ -26,10 +26,18 @@ BaseService = function() {
 	/**
 	 * Used to identify the service in the storage.
 	 *
-	 * @type {Integer} identifier
+	 * @type {Integer} id
 	 */
 
-	this.identifier = 1;
+	this.id = 1;
+
+	/**
+	 * The name of the service.
+	 *
+	 * @type {String} identifier
+	 */
+
+	this.identifier = 'Base service';
 
 	/**
 	 * Used by the service manager to determine when we need to
@@ -47,10 +55,12 @@ BaseService = function() {
  * data returned will be stored in the database as JSON.
  *
  * @method fetch
- * @return {Object} data It will be stringified, and stored in the db.
+ * @param {Object} last The previous value we added.
+ * @param {Function} onSuccess => Will pass an object, that will be stringified, and stored in the db.
+ * @param {Function} onError
  */
 
-BaseService.prototype.fetch = function() {
+BaseService.prototype.fetch = function(last, onSuccess, onError) {
 };
 
 exports.BaseService = BaseService;
