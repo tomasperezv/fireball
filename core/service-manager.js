@@ -6,7 +6,8 @@
  */
 
 var fs = require('fs'),
-	config = require('./node-config/config');
+	config = require('./node-config/config'),
+	storage = require('./model/service');
 
 /**
  * @class Service
@@ -72,6 +73,7 @@ Service.prototype.preload = function() {
 
 Service.prototype.onInterval = function() {
 
+	var storageService = new storage.Service();
 	var numServices = this.services.length;
 	for (var i = 0; i < numServices; i++) {
 
@@ -81,11 +83,24 @@ Service.prototype.onInterval = function() {
 		var delta = (timestamp - service.lastExecutionTime);
 
 		if (delta >= service.interval) {
+
 			service.lastExecutionTime = timestamp;
+
+			// Retrieve and store the data
 			var data = service.fetch();
+			storageService.create({
+				data: JSON.stringify(data),
+				service_id: service.identifier,
+				time: timestamp
+			});
+
 		}
 
 	}
+
+	storageService.load({}, function(model) {
+		console.log(model);
+	});
 
 };
 

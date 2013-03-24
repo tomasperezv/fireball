@@ -24,6 +24,14 @@ BaseService = function() {
 	this.interval = 0;
 
 	/**
+	 * Used to identify the service in the storage.
+	 *
+	 * @type {Integer} identifier
+	 */
+
+	this.identifier = 1;
+
+	/**
 	 * Used by the service manager to determine when we need to
 	 * run the service.
 	 *
