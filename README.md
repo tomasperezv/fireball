@@ -1,4 +1,4 @@
-meteor
+Fireball
 ======
 Node.js monitoring service
 
