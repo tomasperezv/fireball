@@ -6,7 +6,8 @@
 	"dependencies": {
 		"jsdom": "*",
 		"pg": "*",
-		"node-pg-orm": "*"
+		"node-pg-orm": "*",
+		"node-config": "*"
 	},
 	"engine": {
 		"node": ">=0.6"
