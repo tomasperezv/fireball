@@ -2,10 +2,10 @@
  * Object model for the table service
  *
  * create table service(
- * 	id serial PRIMARY KEY,
- * 	time timestamp,
- * 	data text,
- * 	service_id integer
+ *	id serial PRIMARY KEY,
+ *	time timestamp,
+ *	data text,
+ *	service_id integer
  * );
  *
  */
