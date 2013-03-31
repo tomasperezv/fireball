@@ -7,13 +7,14 @@
 
 var fs = require('fs'),
 	config = require('./node-config/config'),
+	errorMonitor = require('./error-monitor'),
 	storage = require('./model/service');
 
 /**
  * @class Service
  */
 
-Service = function() {
+var Service = function() {
 
 	/**
 	 * Interval delay in ms.
@@ -115,7 +116,6 @@ Service.prototype.onInterval = function() {
 
 			}, 1, {column: 'time', type: 'DESC'});
 
-
 		}
 
 	}
@@ -139,8 +139,8 @@ Service.prototype.run = function() {
 
 	var self = this;
 	setInterval(function() {
-		self.onInterval()
-	}, this.intervalDelay)
+		self.onInterval();
+	}, this.intervalDelay);
 
 };
 

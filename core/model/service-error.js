@@ -12,13 +12,13 @@
 
 var DataBaseModel = require('../node-postgre-orm/model/database-model');
 
-Error = function() {
+var ServiceError = function() {
 
 	DataBaseModel.DataBaseModel.call(this);
 	this.table = 'error';
 
 };
 
-Error.prototype = new DataBaseModel.DataBaseModel(); 
+ServiceError.prototype = new DataBaseModel.DataBaseModel(); 
 
-exports.Error = Error;
+exports.ServiceError = ServiceError;

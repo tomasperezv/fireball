@@ -12,12 +12,12 @@
 
 var DataBaseModel = require('../node-postgre-orm/model/database-model');
 
-Service = function() {
+var Service = function() {
 
 	DataBaseModel.DataBaseModel.call(this);
 	this.table = 'service';
 
-}
+};
 
 Service.prototype = new DataBaseModel.DataBaseModel(); 
 

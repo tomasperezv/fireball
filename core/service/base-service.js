@@ -8,7 +8,7 @@
  * @class BaseService
  */
 
-BaseService = function() {
+var BaseService = function() {
 
 	/**
 	 * Defines the time frequency to execute the service, and
