@@ -51,7 +51,7 @@ var Service = function() {
 Service.prototype.preload = function() {
 
 	try {
-		services = fs.readdirSync(this.config.servicesFolder)
+		services = fs.readdirSync(this.config.servicesFolder);
 	} catch(e) {
 		// Error loading files from the folder.
 	}
@@ -59,9 +59,15 @@ Service.prototype.preload = function() {
 	var nServices = services.length;
 	for (var i = 0; i < nServices; i++) {
 
-		var definition = require('./service/' + services[i]);
-		if (typeof definition.Service === 'function') {
-			this.services.push(new definition.Service());
+		var filename = './service/' + services[i];
+		var stats = fs.statSync('./core/' + filename);
+		if (stats.isFile()) {
+
+			var definition = require(filename);
+			if (typeof definition.Service === 'function') {
+				this.services.push(new definition.Service());
+			}
+
 		}
 
 	}
