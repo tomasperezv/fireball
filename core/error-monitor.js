@@ -4,17 +4,23 @@
  * @author Tomas Perez <tom@0x101.com>
  */
 
-var storage = require('./model/service-error');
+var storage = require('./model/service-error'),
+	config = require('./node-config/config');
 
-process.on('uncaughtException', function (exception) {
+// @see ./config/monitor.json
+if (config.get('monitor', 'store-errors')) {
 
-	var errorStorage = new storage.ServiceError();
+	process.on('uncaughtException', function (exception) {
 
-	console.log('Storing exception: ' + exception.message);
+		var errorStorage = new storage.ServiceError();
 
-	errorStorage.create({
-		content: exception.stack,
-		timestamp: Math.round((new Date()).getTime() / 1000)
+		console.log('Storing exception: ' + exception.message);
+
+		errorStorage.create({
+			content: exception.stack,
+			timestamp: Math.round((new Date()).getTime() / 1000)
+		});
+
 	});
 
-});
+}

@@ -6,7 +6,6 @@
  */
 
 var fs = require('fs'),
-	config = require('./node-config/config'),
 	errorMonitor = require('./error-monitor'),
 	storage = require('./model/service');
 
