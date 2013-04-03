@@ -42,11 +42,6 @@ Webpage.prototype.fetch = function(last, onSuccess) {
 
 			if (typeof onSuccess === 'function') {
 				var data = self.processData(body, last);
-
-				if(data.newElements > 0) {
-					console.log('Found new elements: ' + data.newElements);
-				}
-
 				onSuccess(data, data.newElements > 0 ? true : false);
 			}
 
@@ -67,7 +62,7 @@ Webpage.prototype.getLastAddedPosition = function(rows, last) {
 	var position = rows.length;
 
 	if (last !== null) {
-		for (var i = 0; i < rows.length; i++) {
+		for (var i = 1; i < rows.length; i++) {
 			var current = this.getRowObject(rows[i]);
 			if (current !== null) {
 				if (current.id === last.id) {

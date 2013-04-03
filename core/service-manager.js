@@ -85,43 +85,48 @@ Service.prototype.onInterval = function() {
 	for (var i = 0; i < numServices; i++) {
 
 		var service = this.services[i];
+		var self = this;
 
-		var timestamp = this.getCurrentTimestamp();
-		var delta = (timestamp - service.lastExecutionTime);
+		(function(service) {
 
-		if (delta >= service.interval) {
+			var timestamp = self.getCurrentTimestamp();
+			var delta = (timestamp - service.lastExecutionTime);
 
-			console.log('Retrieving ' + service.identifier);
+			if (delta >= service.interval) {
 
-			service.lastExecutionTime = timestamp;
+				console.log('Retrieving ' + service.identifier + ' ' + service.url);
 
-			storageService.load({}, function(result) {
+				service.lastExecutionTime = timestamp;
 
-				var lastValue = result.data.length > 0 ? result.data[0].data : null;
-				if (lastValue !== null) {
-					lastValue = JSON.parse(lastValue);
-					rows = lastValue.rows;
-					lastValue = rows.length > 0 ? rows[0] : null;
-				}
+				storageService.load({service_id: service.id}, function(result) {
 
-				// Retrieve and store the data
-				var data = service.fetch(lastValue, function(result, store) {
-					if (store) {
-
-						console.log('New elements found');
-
-						storageService.create({
-							data: JSON.stringify(result),
-							service_id: service.id,
-							time: timestamp
-						});
-
+					var lastValue = result.data.length > 0 ? result.data[0].data : null;
+					if (lastValue !== null) {
+						lastValue = JSON.parse(lastValue);
+						rows = lastValue.rows;
+						lastValue = rows.length > 0 ? rows[0] : null;
 					}
-				});
 
-			}, 1, {column: 'time', type: 'DESC'});
+					// Retrieve and store the data
+					var data = service.fetch(lastValue, function(result, store) {
+						if (store) {
 
-		}
+							console.log('New elements found');
+
+							storageService.create({
+								data: JSON.stringify(result),
+								service_id: service.id,
+								time: timestamp
+							});
+
+						}
+					});
+
+				}, 1, {column: 'time', type: 'DESC'});
+
+			}
+
+		})(service);
 
 	}
 
