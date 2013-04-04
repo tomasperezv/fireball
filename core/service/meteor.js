@@ -43,11 +43,11 @@ Meteors.prototype.getRowObject = function(row) {
 		if (columns[1].innerHTML !== '') {
 			result = {
 				id: this.filter(columns[2].innerHTML + columns[5].innerHTML),
-				reports: 1,
 				date: this.filter(columns[2].innerHTML)
 			};
 		}
 	} catch(e) {
+		console.log(e);
 	}
 
 	return result;
